@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CommonBottomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
+
   const CommonBottomButton({
     super.key,
     required this.onTap,

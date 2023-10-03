@@ -1,10 +1,10 @@
+import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/screen/authentication/log_in_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/utils/app_route.dart';
 import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../main.dart';
 
@@ -16,20 +16,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  login() {
-    Future.delayed(
-      const Duration(seconds: 2),
-      () => isLogin
-          ? context.go(AppPages.mainScreen)
-          : context.go(AppPages.introScreen),
-    );
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    login();
+    Provider.of<LoginProvider>(context, listen: false).loginStatus(context);
   }
 
   @override

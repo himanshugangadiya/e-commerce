@@ -1,14 +1,18 @@
+import 'package:e_commerce_app/utils/app_color.dart';
+import 'package:e_commerce_app/widget/toast_widget.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../screen/main_screen.dart';
+
 class SignUpProvider extends ChangeNotifier {
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
   bool isRemember = false;
+  String emailOnChangedValue = '';
+  String passwordOnChangedValue = '';
+  String userNameOnChangedValue = '';
 
   rememberMe(bool value) {
     isRemember = value;
@@ -16,29 +20,53 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   passwordOnChanged(String val) {
-    passwordController.text = val;
+    passwordOnChangedValue = val;
     notifyListeners();
-    passwordController.selection = TextSelection.collapsed(
-      offset: passwordController.text.length,
-    );
+
     notifyListeners();
   }
 
   userNameOnChanged(String val) {
-    userNameController.text = val;
-    notifyListeners();
-    userNameController.selection = TextSelection.collapsed(
-      offset: userNameController.text.length,
-    );
+    userNameOnChangedValue = val;
     notifyListeners();
   }
 
   emailOnChanged(String val) {
-    emailController.text = val;
+    emailOnChangedValue = val;
     notifyListeners();
-    emailController.selection = TextSelection.collapsed(
-      offset: emailController.text.length,
-    );
-    notifyListeners();
+  }
+
+  createUser({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      )
+          .then((value) {
+        emailOnChangedValue = '';
+        passwordOnChangedValue = '';
+        userNameOnChangedValue = '';
+        showToast(
+          color: AppColor.purple,
+          msg: "Your account has been successfully created.",
+        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainScreen(),
+            ),
+            (route) => false);
+      });
+    } on FirebaseAuthException catch (error) {
+      emailOnChangedValue = '';
+      passwordOnChangedValue = '';
+      userNameOnChangedValue = '';
+      showToast(color: AppColor.red, msg: error.toString());
+    }
   }
 }

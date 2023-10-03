@@ -11,4 +11,13 @@ class AppImage {
   static const voice = "assets/images/Voice.png";
   static const location = "assets/images/location.png";
   static const orderConfirmed = "assets/images/order_confirmed.png";
+  static const darkMode = "assets/images/darkmode.png";
+  static const password = "assets/images/lock.png";
+  static const information = "assets/images/info.png";
+  static const setting = "assets/images/setting.png";
+  static const favorite = "assets/images/favorite.png";
+  static const order = "assets/images/order.png";
+  static const sell = "assets/images/sell.png";
+  static const cart = "assets/images/cart.png";
+  static const signOut = "assets/images/sign_out.png";
 }

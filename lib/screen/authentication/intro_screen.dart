@@ -1,9 +1,8 @@
+import 'package:e_commerce_app/screen/authentication/log_in_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/utils/app_route.dart';
 import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});
@@ -55,7 +54,11 @@ class IntroScreen extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              context.push(AppPages.socialScreen);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LogInScreen(),
+                                  ));
                             },
                             child: Container(
                               height: H(0.07),
@@ -81,7 +84,11 @@ class IntroScreen extends StatelessWidget {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              context.push(AppPages.socialScreen);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LogInScreen(),
+                                  ));
                             },
                             child: Container(
                               height: H(0.07),
@@ -108,7 +115,11 @@ class IntroScreen extends StatelessWidget {
                     hSizedBox(0.02),
                     GestureDetector(
                       onTap: () {
-                        context.push(AppPages.socialScreen);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LogInScreen(),
+                            ));
                       },
                       child: Text(
                         "Skip",

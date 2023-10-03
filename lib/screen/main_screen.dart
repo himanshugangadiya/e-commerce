@@ -1,4 +1,10 @@
+import 'package:animations/animations.dart';
+import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/provider/main_provider.dart';
+import 'package:e_commerce_app/provider/setting_provider.dart';
+import 'package:e_commerce_app/screen/cart/cart_screen.dart';
+import 'package:e_commerce_app/screen/setting/setting_screen.dart';
+import 'package:e_commerce_app/screen/wishlist/wishlist_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
 import 'package:e_commerce_app/utils/height_width.dart';
@@ -16,12 +22,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Widget> screens = [
-    const HomeScreen(),
-    Container(),
-    Container(),
-    Container(),
+  List<Widget> screens = const [
+    HomeScreen(),
+    WishListScreen(),
+    CartScreen(),
+    SettingScreen(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<LoginProvider>(context, listen: false).currentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +48,7 @@ class _MainScreenState extends State<MainScreen> {
             builder: (context, value, child) => BottomNavigationBar(
               enableFeedback: true,
               currentIndex: value.selectedIndex,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              selectedLabelStyle: GoogleFonts.inter(
-                color: AppColor.black,
-                fontSize: 10.0,
-              ),
-              unselectedLabelStyle: GoogleFonts.inter(
-                color: AppColor.grey,
-                fontSize: 15.0,
-              ),
               type: BottomNavigationBarType.fixed,
-              backgroundColor: AppColor.white,
               onTap: (index) => value.changeIndex(index),
               items: [
                 BottomNavigationBarItem(
@@ -55,23 +57,39 @@ class _MainScreenState extends State<MainScreen> {
                     child: Image.asset(
                       AppImage.home,
                       height: H(0.027),
-                      color: value.selectedIndex == 0
-                          ? AppColor.black
-                          : AppColor.grey,
+                      color:
+                          Provider.of<SettingProvider>(context, listen: false)
+                                  .storage
+                                  .read("isDark")
+                              ? value.selectedIndex == 0
+                                  ? AppColor.white
+                                  : AppColor.grey
+                              : value.selectedIndex == 0
+                                  ? AppColor.black
+                                  : AppColor.grey,
                     ),
                   ),
-                  label: "",
+                  label: "Home",
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
                     padding: EdgeInsets.symmetric(vertical: H(0.01)),
-                    child: Image.asset(AppImage.wishlist,
-                        color: value.selectedIndex == 1
-                            ? AppColor.black
-                            : AppColor.grey,
-                        height: H(0.027)),
+                    child: Image.asset(
+                      AppImage.wishlist,
+                      height: H(0.027),
+                      color:
+                          Provider.of<SettingProvider>(context, listen: false)
+                                  .storage
+                                  .read("isDark")
+                              ? value.selectedIndex == 1
+                                  ? AppColor.white
+                                  : AppColor.grey
+                              : value.selectedIndex == 1
+                                  ? AppColor.black
+                                  : AppColor.grey,
+                    ),
                   ),
-                  label: "",
+                  label: "Wishlist",
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
@@ -79,33 +97,62 @@ class _MainScreenState extends State<MainScreen> {
                     child: Image.asset(
                       AppImage.bag,
                       height: H(0.027),
-                      color: value.selectedIndex == 2
-                          ? AppColor.black
-                          : AppColor.grey,
+                      color:
+                          Provider.of<SettingProvider>(context, listen: false)
+                                  .storage
+                                  .read("isDark")
+                              ? value.selectedIndex == 2
+                                  ? AppColor.white
+                                  : AppColor.grey
+                              : value.selectedIndex == 2
+                                  ? AppColor.black
+                                  : AppColor.grey,
                     ),
                   ),
-                  label: "",
+                  label: "Cart",
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
                     padding: EdgeInsets.symmetric(vertical: H(0.01)),
                     child: Image.asset(
-                      AppImage.wallet,
-                      color: value.selectedIndex == 3
-                          ? AppColor.black
-                          : AppColor.grey,
-                      height: H(0.027),
+                      AppImage.setting,
+                      color:
+                          Provider.of<SettingProvider>(context, listen: false)
+                                  .storage
+                                  .read("isDark")
+                              ? value.selectedIndex == 3
+                                  ? AppColor.white
+                                  : AppColor.grey
+                              : value.selectedIndex == 3
+                                  ? AppColor.black
+                                  : AppColor.grey,
+                      height: H(0.030),
                     ),
                   ),
-                  label: "",
+                  label: "Setting",
                 ),
               ],
             ),
           ),
           body: Consumer<MainProvider>(
-            builder: (context, value, child) => IndexedStack(
-              index: value.selectedIndex,
-              children: screens,
+            builder: (context, value, child) => PageTransitionSwitcher(
+              duration: const Duration(milliseconds: 600),
+              transitionBuilder: (Widget child,
+                  Animation<double> primaryAnimation,
+                  Animation<double> secondaryAnimation) {
+                return FadeThroughTransition(
+                  fillColor:
+                      Provider.of<SettingProvider>(context, listen: false)
+                              .storage
+                              .read("isDark")
+                          ? AppColor.black
+                          : AppColor.white,
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: screens[value.selectedIndex],
             ),
           ),
         ),
@@ -122,25 +169,24 @@ class _MainScreenState extends State<MainScreen> {
               title: const Text(
                 "Exit App",
                 style: TextStyle(
-                  color: AppColor.black,
+                  color: AppColor.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               content: const Text(
                 "Do you want to exit an App?",
                 style: TextStyle(
-                  color: AppColor.black,
+                  color: AppColor.white,
                   fontSize: 14,
                 ),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              backgroundColor: AppColor.white,
+              backgroundColor: AppColor.purple,
               actions: [
                 Row(
                   children: [
-                    hSizedBox(0.15),
                     Expanded(
                       child: InkWell(
                         onTap: () {
@@ -156,14 +202,14 @@ class _MainScreenState extends State<MainScreen> {
                           decoration: BoxDecoration(
                             // color: BaseColor.blue,
                             border: Border.all(
-                              color: AppColor.black,
+                              color: AppColor.white,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Text(
                             "No",
                             style: TextStyle(
-                              color: AppColor.black,
+                              color: AppColor.white,
                             ),
                           ),
                         ),
@@ -184,14 +230,14 @@ class _MainScreenState extends State<MainScreen> {
                           decoration: BoxDecoration(
                             // color: BaseColor.gradient3,
                             border: Border.all(
-                              color: AppColor.black,
+                              color: AppColor.white,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Text(
                             "Yes",
                             style: TextStyle(
-                              color: AppColor.black,
+                              color: AppColor.white,
                             ),
                           ),
                         ),

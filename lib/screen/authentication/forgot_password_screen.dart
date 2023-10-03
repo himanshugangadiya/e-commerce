@@ -19,11 +19,18 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    context.watch<ForgotPasswordProvider>().emailController.clear();
+    clearController();
+  }
+
+  clearController() {
+    emailController.clear();
   }
 
   @override
@@ -33,8 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(
-          key: Provider.of<ForgotPasswordProvider>(context, listen: false)
-              .formKey,
+          key: formKey,
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: W(0.04),
@@ -47,7 +53,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CommonBackButton(
-                      onTap: () {},
+                      onTap: () {
+                        clearController();
+                        Navigator.pop(context);
+                      },
                     ),
                     hSizedBox(0.03),
                     Align(
@@ -68,7 +77,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     /// email
                     Consumer<ForgotPasswordProvider>(
                       builder: (context, value, child) => TextFormField(
-                        controller: value.emailController,
+                        controller: emailController,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -82,10 +91,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         cursorColor: AppColor.black,
                         decoration: InputDecoration(
                           labelText: "Email Address",
-                          suffixIcon: EmailValidator.validate(
-                                  value.emailController.text)
-                              ? const Icon(Icons.done, size: 20)
-                              : const SizedBox(),
+                          suffixIcon:
+                              EmailValidator.validate(value.emailOnChangedValue)
+                                  ? const Icon(Icons.done, size: 20)
+                                  : const SizedBox(),
                         ),
                       ),
                     ),
@@ -93,7 +102,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       "Please write your email to receive a \nconfirmation code to set a new password.",
                       style: TextStyle(
                         fontSize: 15,
@@ -101,6 +110,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    hSizedBox(0.06),
                   ],
                 ),
               ],
@@ -110,11 +120,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
 
       ///
-      bottomNavigationBar: Consumer<ForgotPasswordProvider>(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Consumer<ForgotPasswordProvider>(
         builder: (context, value, child) => CommonBottomButton(
           onTap: () {
-            if (value.formKey.currentState!.validate()) {
+            if (formKey.currentState!.validate()) {
               FocusScope.of(context).unfocus();
+              Provider.of<ForgotPasswordProvider>(context, listen: false)
+                  .forgotPassword(
+                context: context,
+                email: emailController.text.trim().toString(),
+              );
+              clearController();
             } else {
               FocusScope.of(context).unfocus();
             }
