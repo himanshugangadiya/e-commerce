@@ -285,6 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return HomeSubWidget(
                                       id: productList[index].id.toString(),
                                       data: data.data(),
+                                      productId: productList[index]
+                                          ["product_id"],
                                     );
                                   },
                                 )
@@ -308,7 +310,13 @@ class _HomeScreenState extends State<HomeScreen> {
 class HomeSubWidget extends StatelessWidget {
   final dynamic data;
   final String id;
-  const HomeSubWidget({super.key, this.data, required this.id});
+  final num productId;
+  const HomeSubWidget({
+    super.key,
+    this.data,
+    required this.id,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -326,28 +334,33 @@ class HomeSubWidget extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => DetailedScreen(
                   id: id.toString(),
+                  productId: productId,
                   data: data,
-                ).animate().scaleXY(
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.linearToEaseOut,
-                    ),
+                ),
               ),
             );
+/*            .animate().scaleXY(
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.linearToEaseOut,
+            ),*/
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                    height: H(0.24),
-                    width: double.infinity,
-                    color: AppColor.grey.withOpacity(0.1),
-                    child: FancyShimmerImage(
-                      imageUrl: data["product_image"].toString(),
-                      boxFit: BoxFit.cover,
-                    )),
+              Hero(
+                tag: productId.toString(),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                      height: H(0.24),
+                      width: double.infinity,
+                      color: AppColor.grey.withOpacity(0.1),
+                      child: FancyShimmerImage(
+                        imageUrl: data["product_image"].toString(),
+                        boxFit: BoxFit.cover,
+                      )),
+                ),
               ),
               hSizedBox(0.005),
               Padding(

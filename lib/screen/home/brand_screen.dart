@@ -142,6 +142,7 @@ class _BrandScreenState extends State<BrandScreen> {
                               return HomeSubWidget(
                                 id: productList[index].id.toString(),
                                 data: data.data(),
+                                productId: productList[index]["product_id"],
                               );
                             },
                           )

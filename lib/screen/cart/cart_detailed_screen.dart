@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/provider/cart_detailed_provider.dart';
 import 'package:e_commerce_app/provider/create_address_provider.dart';
+import 'package:e_commerce_app/provider/detailed_provider.dart';
 import 'package:e_commerce_app/provider/login_provider.dart';
+import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/screen/cart/address_screen.dart';
 import 'package:e_commerce_app/screen/home/order_confirmed_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
@@ -205,7 +207,14 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                             value.subCart();
                                                           },
                                                           height: H(0.03),
-                                                          color: AppColor.white,
+                                                          color: Provider.of<
+                                                                          SettingProvider>(
+                                                                      context)
+                                                                  .storage
+                                                                  .read(
+                                                                      "isDark")
+                                                              ? AppColor.grey
+                                                              : AppColor.white,
                                                           icon: const Icon(
                                                             Icons.remove,
                                                             size: 20,
@@ -232,7 +241,14 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                             value.addCart();
                                                           },
                                                           height: H(0.03),
-                                                          color: AppColor.white,
+                                                          color: Provider.of<
+                                                                          SettingProvider>(
+                                                                      context)
+                                                                  .storage
+                                                                  .read(
+                                                                      "isDark")
+                                                              ? AppColor.grey
+                                                              : AppColor.white,
                                                           icon: const Icon(
                                                             Icons.add,
                                                             size: 20,
@@ -291,7 +307,6 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                               ),
 
                               /// address
-
                               Consumer<CreateAddressProvider>(
                                   builder: (context, value, child) {
                                 var data = value.address.get("primaryAddress");
@@ -408,10 +423,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                               TextStyle(color: AppColor.grey),
                                         ),
                                         Text(
-                                          value
-                                              .priceIntoCart(
-                                                  data["price"], value.cart)
-                                              .toString(),
+                                          "₹ ${value.priceIntoCart(data["price"], value.cart).toString()}",
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -432,7 +444,9 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                         Text(
                                           "- ${value.discount(data["price"], data["discount"]).toStringAsFixed(2)}",
                                           style: const TextStyle(
-                                              fontWeight: FontWeight.w600),
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.green,
+                                          ),
                                         ),
                                       ],
                                     ),

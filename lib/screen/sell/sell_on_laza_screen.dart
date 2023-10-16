@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
 
+import '../../provider/setting_provider.dart';
 import '../../utils/height_width.dart';
 import '../../widget/common_back_button.dart';
 
@@ -51,14 +52,6 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
               elevation: 0.0,
               title: const Text("Add Product Details"),
               centerTitle: true,
-              leading: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: CommonBackButton(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
             ),
           ),
         ),
@@ -78,7 +71,7 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                     },
                     child: Container(
                       height: H(0.2),
-                      width: W(0.7),
+                      width: double.infinity,
                       alignment: Alignment.center,
                       color: AppColor.grey.withOpacity(0.2),
                       child: value.productImage != null
@@ -212,6 +205,23 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                                         ),
                                       ),
                                     ),
+                                    // Wrap(
+                                    //   children: List<Widget>.generate(
+                                    //     sizeList.length,
+                                    //     (int idx) {
+                                    //       bool _value = false;
+                                    //       return ChoiceChip(
+                                    //           label: Text(
+                                    //               sizeList[idx].toString()),
+                                    //           selected: _value == idx,
+                                    //           onSelected: (bool selected) {
+                                    //             setState(() {
+                                    //               _value = selected;
+                                    //             });
+                                    //           });
+                                    //     },
+                                    //   ).toList(),
+                                    // ),
                                     ChipsChoice<String>.multiple(
                                       value: selectedSizeList,
                                       mainAxisSize: MainAxisSize.max,
@@ -225,6 +235,7 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                                           print(selectedSizeList);
                                         });
                                       },
+                                      choiceStyle: C2ChipStyle(),
                                       choiceItems:
                                           C2Choice.listFrom<String, String>(
                                         source: sizeList,

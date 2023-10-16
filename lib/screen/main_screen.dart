@@ -3,8 +3,8 @@ import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/provider/main_provider.dart';
 import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/screen/cart/cart_screen.dart';
+import 'package:e_commerce_app/screen/sell/sell_on_laza_screen.dart';
 import 'package:e_commerce_app/screen/setting/setting_screen.dart';
-import 'package:e_commerce_app/screen/wishlist/wishlist_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
 import 'package:e_commerce_app/utils/height_width.dart';
@@ -24,9 +24,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = const [
     HomeScreen(),
-    WishListScreen(),
     CartScreen(),
     SettingScreen(),
+    SellOnLazaScreen(),
   ];
 
   @override
@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
                   icon: Padding(
                     padding: EdgeInsets.symmetric(vertical: H(0.01)),
                     child: Image.asset(
-                      AppImage.wishlist,
+                      AppImage.bag,
                       height: H(0.027),
                       color:
                           Provider.of<SettingProvider>(context, listen: false)
@@ -85,26 +85,6 @@ class _MainScreenState extends State<MainScreen> {
                                   ? AppColor.white
                                   : AppColor.grey
                               : value.selectedIndex == 1
-                                  ? AppColor.black
-                                  : AppColor.grey,
-                    ),
-                  ),
-                  label: "Wishlist",
-                ),
-                BottomNavigationBarItem(
-                  icon: Padding(
-                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
-                    child: Image.asset(
-                      AppImage.bag,
-                      height: H(0.027),
-                      color:
-                          Provider.of<SettingProvider>(context, listen: false)
-                                  .storage
-                                  .read("isDark")
-                              ? value.selectedIndex == 2
-                                  ? AppColor.white
-                                  : AppColor.grey
-                              : value.selectedIndex == 2
                                   ? AppColor.black
                                   : AppColor.grey,
                     ),
@@ -120,16 +100,36 @@ class _MainScreenState extends State<MainScreen> {
                           Provider.of<SettingProvider>(context, listen: false)
                                   .storage
                                   .read("isDark")
-                              ? value.selectedIndex == 3
+                              ? value.selectedIndex == 2
                                   ? AppColor.white
                                   : AppColor.grey
-                              : value.selectedIndex == 3
+                              : value.selectedIndex == 2
                                   ? AppColor.black
                                   : AppColor.grey,
                       height: H(0.030),
                     ),
                   ),
                   label: "Setting",
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
+                    child: Image.asset(
+                      AppImage.cart,
+                      height: H(0.027),
+                      color:
+                          Provider.of<SettingProvider>(context, listen: false)
+                                  .storage
+                                  .read("isDark")
+                              ? value.selectedIndex == 3
+                                  ? AppColor.white
+                                  : AppColor.grey
+                              : value.selectedIndex == 3
+                                  ? AppColor.black
+                                  : AppColor.grey,
+                    ),
+                  ),
+                  label: "Sell",
                 ),
               ],
             ),

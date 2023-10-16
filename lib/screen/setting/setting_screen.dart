@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/screen/setting/change_password_screen.dart';
-import 'package:e_commerce_app/screen/setting/sell_on_laza_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_image.dart';
 import '../../utils/height_width.dart';
+import '../sell/sell_on_laza_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

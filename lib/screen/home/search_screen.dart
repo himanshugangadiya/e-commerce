@@ -53,7 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           Expanded(
                             child: TextField(
                               controller: searchController,
-                              cursorColor: AppColor.black,
+                              cursorColor: AppColor.purple,
                               onChanged: (val) {
                                 Provider.of<HomeProvider>(
                                   context,
@@ -102,10 +102,15 @@ class _SearchScreenState extends State<SearchScreen> {
                         } else {
                           List response = snapshot.data!.docs;
                           List productList = response
-                              .where((element) => element["title"]
-                                  .toString()
-                                  .contains(Provider.of<HomeProvider>(context)
-                                      .searchingText))
+                              .where(
+                                (element) => element["title"]
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(Provider.of<HomeProvider>(context)
+                                        .searchingText
+                                        .toString()
+                                        .toLowerCase()),
+                              )
                               .toList();
                           return productList.isNotEmpty
                               ? GridView.builder(
@@ -128,6 +133,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     return HomeSubWidget(
                                       id: productList[index].id.toString(),
                                       data: data.data(),
+                                      productId: productList[index]
+                                          ["product_id"],
                                     );
                                   },
                                 )

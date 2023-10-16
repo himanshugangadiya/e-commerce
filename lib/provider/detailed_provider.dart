@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/model/product.dart';
 import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/screen/cart/cart_detailed_screen.dart';
 import 'package:e_commerce_app/screen/cart/cart_screen.dart';
@@ -7,13 +10,36 @@ import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/widget/toast_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-
-import '../utils/height_width.dart';
 
 class DetailedProvider extends ChangeNotifier {
   int? selectedSizeIndex;
   String selectedSizeName = "";
+  bool isWishlist = false;
+
+  String selectedProductImage = '';
+
+  changeProductImage(String image) {
+    selectedProductImage = image;
+    notifyListeners();
+  }
+
+  changeWishList() {
+    isWishlist = !isWishlist;
+    notifyListeners();
+  }
+
+  addWishlist(num productId, BuildContext context, Box box) async {
+    if (isWishlist == true) {
+      Product product = Product()..productId = productId;
+      await box.add(product).then((value) {
+        log("wishlist added");
+        isWishlist = false;
+        notifyListeners();
+      });
+    }
+  }
 
   selectedSize(int index, String name) {
     selectedSizeIndex = index;
@@ -44,10 +70,5 @@ class DetailedProvider extends ChangeNotifier {
       selectedSizeName = '';
       showToast(color: AppColor.red, msg: error.toString());
     });
-  }
-
-  addToWishList(data, context) {
-    data["uId"] = Provider.of<LoginProvider>(context).currentUserId();
-    FireStore.firebaseFirestore.collection("wishlist").add(data);
   }
 }

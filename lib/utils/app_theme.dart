@@ -114,6 +114,9 @@ ThemeData lightThemeData = ThemeData(
 
 ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: AppColor.black,
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: AppColor.black,
+  ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: AppColor.black,
     selectedItemColor: AppColor.white,
