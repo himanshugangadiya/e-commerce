@@ -1,19 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/provider/login_provider.dart';
-import 'package:e_commerce_app/provider/setting_provider.dart';
+ import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/screen/cart/cart_detailed_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
-import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/widget/common_bottom_button.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/height_width.dart';
-import '../../widget/common_add_remove_button.dart';
-import '../../widget/common_arrow_forward_button.dart';
-import '../../widget/common_back_button.dart';
+ import '../../widget/common_add_remove_button.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -25,6 +19,8 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -34,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: W(0.05),
+          horizontal: width*(0.05),
         ),
         child: StreamBuilder(
           stream:
@@ -64,7 +60,7 @@ class _CartScreenState extends State<CartScreen> {
                         itemCount: cartData.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: EdgeInsets.only(bottom: H(0.02)),
+                            padding: EdgeInsets.only(bottom: height*(0.02)),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: GestureDetector(
@@ -79,7 +75,7 @@ class _CartScreenState extends State<CartScreen> {
                                       ));
                                 },
                                 child: Container(
-                                  height: H(0.16),
+                                  height: height*(0.16),
                                   color: AppColor.grey.withOpacity(0.1),
                                   padding: const EdgeInsets.all(12),
                                   child: Row(
@@ -88,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                         child: Container(
                                           height: double.infinity,
-                                          width: W(0.28),
+                                          width: width*(0.28),
                                           color: Colors.white,
                                           child: FancyShimmerImage(
                                             imageUrl: cartData[index]
@@ -97,7 +93,10 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ),
                                       ),
-                                      wSizedBox(0.03),
+                                       SizedBox(
+                                        width:
+                                        width*0.03,
+                                      ),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
@@ -109,7 +108,9 @@ class _CartScreenState extends State<CartScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                hSizedBox(0.005),
+                                                 SizedBox(
+                                                  height: height*0.005,
+                                                ),
                                                 Text(
                                                   cartData[index]["title"]
                                                       .toString(),
@@ -119,7 +120,9 @@ class _CartScreenState extends State<CartScreen> {
                                                       .copyWith(fontSize: 18),
                                                   maxLines: 2,
                                                 ),
-                                                hSizedBox(0.005),
+                                                 SizedBox(
+                                                  height: height*0.005,
+                                                ),
                                                 Text(
                                                   cartData[index]["description"]
                                                       .toString(),
@@ -152,7 +155,7 @@ class _CartScreenState extends State<CartScreen> {
                                                             .toString())
                                                         .delete();
                                                   },
-                                                  height: H(0.04),
+                                                  height: height*(0.04),
                                                   color:
                                                       Provider.of<SettingProvider>(
                                                                   context,
@@ -200,95 +203,95 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
-
-class PriceWidget extends StatelessWidget {
-  const PriceWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          "Price",
-          style: TextStyle(color: AppColor.grey),
-        ),
-        Text(
-          "\$114",
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
-}
-
-class TotalWidget extends StatelessWidget {
-  const TotalWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          "Total",
-          style: TextStyle(color: AppColor.black, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          "\$125",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
-}
-
-class ShippingCostWidget extends StatelessWidget {
-  const ShippingCostWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          "Shipping cost",
-          style: TextStyle(color: AppColor.grey),
-        ),
-        Text(
-          "\$11",
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
-}
-
-class DiscountWidget extends StatelessWidget {
-  const DiscountWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          "Discount(2%)",
-          style: TextStyle(color: AppColor.grey),
-        ),
-        Text(
-          "\$2.4",
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-      ],
-    );
-  }
-}
+//
+// class PriceWidget extends StatelessWidget {
+//   const PriceWidget({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         Text(
+//           "Price",
+//           style: TextStyle(color: AppColor.grey),
+//         ),
+//         Text(
+//           "\$114",
+//           style: TextStyle(fontWeight: FontWeight.w600),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// class TotalWidget extends StatelessWidget {
+//   const TotalWidget({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         Text(
+//           "Total",
+//           style: TextStyle(color: AppColor.black, fontWeight: FontWeight.bold),
+//         ),
+//         Text(
+//           "\$125",
+//           style: TextStyle(fontWeight: FontWeight.bold),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// class ShippingCostWidget extends StatelessWidget {
+//   const ShippingCostWidget({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         Text(
+//           "Shipping cost",
+//           style: TextStyle(color: AppColor.grey),
+//         ),
+//         Text(
+//           "\$11",
+//           style: TextStyle(fontWeight: FontWeight.w600),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// class DiscountWidget extends StatelessWidget {
+//   const DiscountWidget({
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         Text(
+//           "Discount(2%)",
+//           style: TextStyle(color: AppColor.grey),
+//         ),
+//         Text(
+//           "\$2.4",
+//           style: TextStyle(fontWeight: FontWeight.w600),
+//         ),
+//       ],
+//     );
+//   }
+// }

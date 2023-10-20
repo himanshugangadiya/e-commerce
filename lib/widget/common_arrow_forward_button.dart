@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
 
 class CommonArrowForwardButton extends StatelessWidget {
@@ -10,11 +9,13 @@ class CommonArrowForwardButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: W(0.1),
-        height: H(0.04),
+        width: width * 0.1,
+        height: height * 0.04,
         alignment: Alignment.centerRight,
         child: const Icon(
           Icons.arrow_forward,

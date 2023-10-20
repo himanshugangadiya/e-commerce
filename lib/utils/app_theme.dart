@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -67,7 +66,7 @@ ThemeData lightThemeData = ThemeData(
         ),
       ),
       backgroundColor: MaterialStateProperty.all(AppColor.purple),
-      fixedSize: MaterialStateProperty.all(Size(double.infinity, H(0.06))),
+      fixedSize: MaterialStateProperty.all(const Size(double.infinity, (0.06))),
       elevation: MaterialStateProperty.all(0.0),
     ),
   ),
@@ -114,7 +113,7 @@ ThemeData lightThemeData = ThemeData(
 
 ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: AppColor.black,
-  bottomSheetTheme: BottomSheetThemeData(
+  bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: AppColor.black,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -193,7 +192,7 @@ ThemeData darkThemeData = ThemeData(
         ),
       ),
       backgroundColor: MaterialStateProperty.all(AppColor.purple),
-      fixedSize: MaterialStateProperty.all(Size(double.infinity, H(0.06))),
+      fixedSize: MaterialStateProperty.all(const Size(double.infinity, 60)),
       elevation: MaterialStateProperty.all(0.0),
     ),
   ),

@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/screen/authentication/log_in_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -9,6 +8,8 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.purple,
@@ -23,8 +24,8 @@ class IntroScreen extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(15),
                 padding: EdgeInsets.symmetric(
-                  horizontal: W(0.04),
-                  vertical: H(0.03),
+                  horizontal: width * 0.04,
+                  vertical: height * 0.03,
                 ),
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -40,7 +41,9 @@ class IntroScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineSmall!,
                       textAlign: TextAlign.center,
                     ),
-                    hSizedBox(0.01),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
                     const Text(
                       "Create your individual & unique style and look amazing everyday.",
                       style: TextStyle(
@@ -48,7 +51,9 @@ class IntroScreen extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    hSizedBox(0.03),
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -57,11 +62,11 @@ class IntroScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LogInScreen(),
+                                    builder: (context) => const LogInScreen(),
                                   ));
                             },
                             child: Container(
-                              height: H(0.07),
+                              height: height * 0.07,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColor.grey.withOpacity(0.2),
@@ -80,7 +85,9 @@ class IntroScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        wSizedBox(0.03),
+                        SizedBox(
+                          width: width * 0.03,
+                        ),
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -91,7 +98,7 @@ class IntroScreen extends StatelessWidget {
                                   ));
                             },
                             child: Container(
-                              height: H(0.07),
+                              height: height * 0.07,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColor.purple,
@@ -112,13 +119,15 @@ class IntroScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    hSizedBox(0.02),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LogInScreen(),
+                              builder: (context) => const LogInScreen(),
                             ));
                       },
                       child: Text(

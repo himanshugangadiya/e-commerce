@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
+ import '../../widget/common_back_button.dart';
 import 'home_screen.dart';
 
 class BrandScreen extends StatefulWidget {
@@ -17,11 +16,13 @@ class BrandScreen extends StatefulWidget {
 class _BrandScreenState extends State<BrandScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(
           double.infinity,
-          H(0.1),
+          height*(0.1),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -46,7 +47,7 @@ class _BrandScreenState extends State<BrandScreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: W(0.05),
+              horizontal: width*(0.05),
             ),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -133,8 +134,8 @@ class _BrandScreenState extends State<BrandScreen> {
                               childAspectRatio: 0.62,
                             ),
                             padding: EdgeInsets.symmetric(
-                              horizontal: W(0.05),
-                              vertical: H(0.02),
+                              horizontal: width*(0.05),
+                              vertical: height*(0.02),
                             ),
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {

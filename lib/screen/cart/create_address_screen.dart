@@ -1,14 +1,11 @@
 import 'package:e_commerce_app/provider/create_address_provider.dart';
 import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
+ import '../../widget/common_back_button.dart';
 
 class CreateAddressScreen extends StatefulWidget {
   const CreateAddressScreen({super.key});
@@ -20,13 +17,15 @@ class CreateAddressScreen extends StatefulWidget {
 class _CreateAddressScreenState extends State<CreateAddressScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
           preferredSize: Size(
             double.infinity,
-            H(0.1),
+            height*(0.1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -48,7 +47,7 @@ class _CreateAddressScreenState extends State<CreateAddressScreen> {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: W(0.04),
+            horizontal: width*(0.04),
           ),
           child: Consumer<CreateAddressProvider>(
             builder: (context, value, child) => Column(
@@ -59,7 +58,9 @@ class _CreateAddressScreenState extends State<CreateAddressScreen> {
                   hintText: "john don",
                   inputType: TextInputType.text,
                 ),
-                hSizedBox(0.02),
+                 SizedBox(
+                  height: height*0.02,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -70,8 +71,10 @@ class _CreateAddressScreenState extends State<CreateAddressScreen> {
                         inputType: TextInputType.text,
                       ),
                     ),
-                    wSizedBox(0.04),
-                    Expanded(
+                    SizedBox(
+                      width: width*0.04,
+                    ),
+                     Expanded(
                       child: CommonAddressTextFieldWidget(
                         controller: value.cityController,
                         title: "City",
@@ -81,21 +84,27 @@ class _CreateAddressScreenState extends State<CreateAddressScreen> {
                     ),
                   ],
                 ),
-                hSizedBox(0.02),
+                 SizedBox(
+                  height: height*0.02,
+                ),
                 CommonAddressTextFieldWidget(
                   controller: value.phoneNumberController,
                   title: "Phone number",
                   hintText: "70445 61154",
                   inputType: TextInputType.number,
                 ),
-                hSizedBox(0.02),
+                 SizedBox(
+                  height: height*0.02,
+                ),
                 CommonAddressTextFieldWidget(
                   controller: value.addressController,
                   title: "Address",
                   hintText: "28,xyz society,varachha,surat,gujarat",
                   inputType: TextInputType.text,
                 ),
-                hSizedBox(0.02),
+                 SizedBox(
+                  height: height*0.02,
+                ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //   children: [
@@ -151,11 +160,13 @@ class CommonAddressTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: H(0.01)),
+          padding: EdgeInsets.symmetric(vertical: height*(0.01)),
           child: Text(
             title.toString(),
             style: const TextStyle(fontWeight: FontWeight.w600),
@@ -164,7 +175,7 @@ class CommonAddressTextFieldWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            height: H(0.06),
+            height: height*(0.06),
             color: AppColor.grey.withOpacity(0.2),
             child: TextField(
               controller: controller,
@@ -175,7 +186,7 @@ class CommonAddressTextFieldWidget extends StatelessWidget {
               keyboardType: inputType,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
-                  horizontal: W(0.03),
+                  horizontal: width*(0.03),
                 ),
                 hintText: hintText,
                 focusedErrorBorder: InputBorder.none,

@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/provider/add_review_provider.dart';
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:e_commerce_app/widget/common_back_button.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
-import 'package:e_commerce_app/widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +24,11 @@ class AddReviewScreen extends StatefulWidget {
 class _AddReviewScreenState extends State<AddReviewScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, H(0.1)),
+        preferredSize: Size(double.infinity, height*(0.1)),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: AppBar(
@@ -52,22 +51,26 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: W(0.05),
+          horizontal: height*(0.05),
         ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              hSizedBox(0.01),
+               SizedBox(
+                height: height*0.01,
+              ),
               Text(
                 "Name",
                 style: Theme.of(context).textTheme.displayMedium,
               ),
-              hSizedBox(0.015),
+               SizedBox(
+                height: height*0.015,
+              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
-                  height: H(0.065),
+                  height: height*(0.065),
                   color: AppColor.grey.withOpacity(0.2),
                   child: Consumer<AddReviewProvider>(
                     builder: (context, value, child) => TextField(
@@ -75,7 +78,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                       cursorColor: AppColor.purple,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                          horizontal: W(0.03),
+                          horizontal: width*(0.03),
                         ),
                         hintText: "Type your name",
                         hintStyle: const TextStyle(
@@ -92,16 +95,20 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   ),
                 ),
               ),
-              hSizedBox(0.03),
+               SizedBox(
+                height: height*0.03,
+              ),
               Text(
                 "How was your experience ?",
                 style: Theme.of(context).textTheme.displayMedium,
               ),
-              hSizedBox(0.015),
+               SizedBox(
+                height: height*0.015,
+              ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
-                  height: H(0.25),
+                  height: height*(0.25),
                   color: AppColor.grey.withOpacity(0.2),
                   child: Consumer<AddReviewProvider>(
                     builder: (context, value, child) => TextField(
@@ -110,8 +117,8 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                       cursorColor: AppColor.purple,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
-                          horizontal: W(0.03),
-                          vertical: H(0.01),
+                          horizontal: width*(0.03),
+                          vertical: height*(0.01),
                         ),
                         hintText: "Describe your experience?",
                         hintStyle: const TextStyle(
@@ -128,12 +135,16 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   ),
                 ),
               ),
-              hSizedBox(0.03),
+               SizedBox(
+                height: height*0.03,
+              ),
               Text(
                 "Review",
                 style: Theme.of(context).textTheme.displayMedium,
               ),
-              hSizedBox(0.02),
+               SizedBox(
+                height: height*0.02,
+              ),
               Consumer<AddReviewProvider>(
                 builder: (context, value, child) => RatingBar.builder(
                   initialRating: value.rating,

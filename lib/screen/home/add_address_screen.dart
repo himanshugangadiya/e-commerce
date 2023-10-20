@@ -1,5 +1,4 @@
-import 'package:e_commerce_app/utils/height_width.dart';
-import 'package:e_commerce_app/widget/common_back_button.dart';
+ import 'package:e_commerce_app/widget/common_back_button.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +15,12 @@ class AddAddressScreen extends StatefulWidget {
 class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, H(0.1)),
+        preferredSize: Size(double.infinity, height*(0.1)),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: AppBar(
@@ -38,12 +39,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: W(0.05),
+          horizontal: width*(0.05),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            hSizedBox(0.01),
+             SizedBox(
+              height: height*0.01,
+            ),
 
             /// name
             Text(
@@ -51,18 +54,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               style: Theme.of(context).textTheme.displayMedium,
             ),
 
-            hSizedBox(0.015),
+             SizedBox(
+              height: height*0.015,
+            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
-                height: H(0.065),
+                height: height*(0.065),
                 color: AppColor.grey.withOpacity(0.2),
                 alignment: Alignment.center,
                 child: TextField(
                   cursorColor: AppColor.purple,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: W(0.03),
+                      horizontal: width*(0.03),
                     ),
                     hintText: "Type your name",
                     hintStyle: const TextStyle(
@@ -79,8 +84,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ),
             ),
 
-            hSizedBox(0.03),
-
+             SizedBox(
+              height: height*0.03,
+            ),
             /// country && city
             Row(
               children: [
@@ -92,18 +98,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         "Country",
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
-                      hSizedBox(0.015),
+                       SizedBox(
+                        height: height*0.015,
+                      ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-                          height: H(0.065),
+                          height: height*(0.065),
                           color: AppColor.grey.withOpacity(0.2),
                           alignment: Alignment.center,
                           child: TextField(
                             cursorColor: AppColor.purple,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: W(0.03),
+                                horizontal: width*(0.03),
                               ),
                               hintText: "Country",
                               hintStyle: const TextStyle(
@@ -122,7 +130,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     ],
                   ),
                 ),
-                wSizedBox(0.05),
+                 SizedBox(
+                  width: width*0.05,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,18 +141,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         "City",
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
-                      hSizedBox(0.015),
+                       SizedBox(
+                        height: height*0.015,
+                      ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
-                          height: H(0.065),
+                          height: height*(0.065),
                           color: AppColor.grey.withOpacity(0.2),
                           alignment: Alignment.center,
                           child: TextField(
                             cursorColor: AppColor.purple,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: W(0.03),
+                                horizontal: width*(0.03),
                               ),
                               hintText: "City",
                               hintStyle: const TextStyle(
@@ -164,25 +176,29 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ],
             ),
 
-            hSizedBox(0.03),
+             SizedBox(
+              height: height*0.03,
+            ),
 
             /// phone number
             Text(
               "Phone number",
               style: Theme.of(context).textTheme.displayMedium,
             ),
-            hSizedBox(0.015),
+             SizedBox(
+              height: height*0.015,
+            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
-                height: H(0.065),
+                height: height*(0.065),
                 color: AppColor.grey.withOpacity(0.2),
                 alignment: Alignment.center,
                 child: TextField(
                   cursorColor: AppColor.purple,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: W(0.03),
+                      horizontal: width*(0.03),
                     ),
                     hintText: "Enter phone number",
                     hintStyle: const TextStyle(
@@ -199,25 +215,29 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ),
             ),
 
-            hSizedBox(0.03),
+             SizedBox(
+              height: height*0.03,
+            ),
 
             /// address
             Text(
               "Address",
               style: Theme.of(context).textTheme.displayMedium,
             ),
-            hSizedBox(0.015),
+             SizedBox(
+              height: height*0.015,
+            ),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
-                height: H(0.065),
+                height: height*(0.065),
                 color: AppColor.grey.withOpacity(0.2),
                 alignment: Alignment.center,
                 child: TextField(
                   cursorColor: AppColor.purple,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      horizontal: W(0.03),
+                      horizontal: width*(0.03),
                     ),
                     hintText: "Enter address",
                     hintStyle: const TextStyle(
@@ -234,13 +254,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               ),
             ),
 
-            hSizedBox(0.015),
+
+             SizedBox(
+              height: height*0.015,
+            ),
 
             /// primary address
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Save as primary address",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),

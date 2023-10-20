@@ -1,12 +1,9 @@
 import 'package:e_commerce_app/provider/login_provider.dart';
-import 'package:e_commerce_app/screen/authentication/log_in_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import '../../main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,18 +17,20 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     Provider.of<LoginProvider>(context, listen: false).loginStatus(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColor.purple,
         body: Center(
           child: Image.asset(
             AppImage.logo,
-            height: H(0.05),
+            height: height * 0.05,
           ),
         ),
       ),

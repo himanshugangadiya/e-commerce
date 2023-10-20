@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import '../../provider/home_provider.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_image.dart';
-import '../../utils/height_width.dart';
 import 'home_screen.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final String spokenText;
+  const SearchScreen({super.key, required this.spokenText});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -17,14 +17,26 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    searchController = TextEditingController(
+      text: widget.spokenText.toString(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: W(0.02),
-            vertical: H(0.01),
+            horizontal: width * 0.02,
+            vertical: height * 0.01,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   Expanded(
                     child: Container(
-                      height: H(0.06),
+                      height: height * 0.06,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: AppColor.grey.withOpacity(0.1),
@@ -43,11 +55,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: W(0.04),
+                              horizontal: width * 0.04,
                             ),
                             child: Image.asset(
                               AppImage.search,
-                              height: H(0.025),
+                              height: height * 0.025,
                             ),
                           ),
                           Expanded(
@@ -77,7 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
               SizedBox(
-                height: H(0.03),
+                height: height * 0.03,
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -106,10 +118,23 @@ class _SearchScreenState extends State<SearchScreen> {
                                 (element) => element["title"]
                                     .toString()
                                     .toLowerCase()
-                                    .contains(Provider.of<HomeProvider>(context)
-                                        .searchingText
-                                        .toString()
-                                        .toLowerCase()),
+                                    .contains(
+                                      Provider.of<HomeProvider>(context)
+                                          .searchingText
+                                          .toString()
+                                          .toLowerCase(),
+                                    ),
+                              )
+                              .where(
+                                (element) => element["title"]
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(
+                                      searchController.text
+                                          .trim()
+                                          .toString()
+                                          .toLowerCase(),
+                                    ),
                               )
                               .toList();
                           return productList.isNotEmpty
@@ -124,8 +149,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                     childAspectRatio: 0.62,
                                   ),
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: W(0.03),
-                                    vertical: H(0.02),
+                                    horizontal: width * 0.03,
+                                    vertical: height * 0.02,
                                   ),
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {

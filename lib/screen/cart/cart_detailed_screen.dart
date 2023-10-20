@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/provider/cart_detailed_provider.dart';
 import 'package:e_commerce_app/provider/create_address_provider.dart';
-import 'package:e_commerce_app/provider/detailed_provider.dart';
-import 'package:e_commerce_app/provider/login_provider.dart';
-import 'package:e_commerce_app/provider/setting_provider.dart';
+  import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/screen/cart/address_screen.dart';
 import 'package:e_commerce_app/screen/home/order_confirmed_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
@@ -14,11 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-import '../../utils/height_width.dart';
-import '../../widget/common_add_remove_button.dart';
+ import '../../widget/common_add_remove_button.dart';
 import '../../widget/common_arrow_forward_button.dart';
 import '../../widget/common_back_button.dart';
-import 'create_address_screen.dart';
 
 class CartDetailedScreen extends StatefulWidget {
   final String id;
@@ -73,6 +69,8 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     debugPrint(
         "cart detailed screen build ======================================= ");
     return WillPopScope(
@@ -84,7 +82,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
         appBar: PreferredSize(
           preferredSize: Size(
             double.infinity,
-            H(0.1),
+            height*0.1,
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -108,7 +106,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
         ),
         body: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: W(0.05),
+              horizontal: width*0.05,
             ),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -134,11 +132,11 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                             children: [
                               /// order details
                               Padding(
-                                padding: EdgeInsets.only(bottom: H(0.02)),
+                                padding: EdgeInsets.only(bottom: height*0.02),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
-                                    height: H(0.16),
+                                    height: height*(0.16),
                                     color: AppColor.grey.withOpacity(0.1),
                                     padding: const EdgeInsets.all(12),
                                     child: Row(
@@ -148,7 +146,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                               BorderRadius.circular(10),
                                           child: Container(
                                             height: double.infinity,
-                                            width: W(0.28),
+                                            width: width*(0.28),
                                             color: Colors.white,
                                             child: data["product_image"] != ''
                                                 ? Image.network(
@@ -161,7 +159,9 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                   ),
                                           ),
                                         ),
-                                        wSizedBox(0.03),
+                                         SizedBox(
+                                          width: width*0.03,
+                                        ),
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment:
@@ -173,7 +173,10 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  hSizedBox(0.005),
+
+                                                  SizedBox(
+                                                    height: height*0.005,
+                                                  ),
                                                   Text(
                                                     data["title"].toString(),
                                                     style: Theme.of(context)
@@ -182,7 +185,9 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                         .copyWith(fontSize: 19),
                                                     maxLines: 2,
                                                   ),
-                                                  hSizedBox(0.005),
+                                                   SizedBox(
+                                                    height: height*0.005,
+                                                  ),
                                                   Text(
                                                     "Size : ${data["selected_size"].toString().toUpperCase()}",
                                                     style: const TextStyle(
@@ -206,7 +211,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                           onTap: () {
                                                             value.subCart();
                                                           },
-                                                          height: H(0.03),
+                                                          height: height*(0.03),
                                                           color: Provider.of<
                                                                           SettingProvider>(
                                                                       context)
@@ -223,7 +228,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                         Padding(
                                                           padding: EdgeInsets
                                                               .symmetric(
-                                                            horizontal: W(0.03),
+                                                            horizontal: width*(0.03),
                                                           ),
                                                           child: Text(
                                                             value.cart
@@ -240,7 +245,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                           onTap: () {
                                                             value.addCart();
                                                           },
-                                                          height: H(0.03),
+                                                          height: height*(0.03),
                                                           color: Provider.of<
                                                                           SettingProvider>(
                                                                       context)
@@ -279,7 +284,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
 
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  vertical: H(0.01),
+                                  vertical: height*(0.01),
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -317,8 +322,8 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             child: Container(
-                                              height: H(0.07),
-                                              width: H(0.07),
+                                              height: height*(0.07),
+                                              width: height*(0.07),
                                               decoration: const BoxDecoration(
                                                 image: DecorationImage(
                                                   image: AssetImage(
@@ -333,7 +338,9 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                               ),
                                             ),
                                           ),
-                                          wSizedBox(0.03),
+                                           SizedBox(
+                                            width: width*0.03,
+                                          ),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -346,7 +353,9 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                                   ),
                                                   maxLines: 1,
                                                 ),
-                                                hSizedBox(0.005),
+                                                 SizedBox(
+                                                  height: height*0.005,
+                                                ),
                                                 Text(
                                                   "${data["city"]}, ${data["country"]}",
                                                   style: const TextStyle(
@@ -360,7 +369,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                           ),
                                           CommonAddRemoveButton(
                                             onTap: () {},
-                                            height: H(0.03),
+                                            height: height*(0.03),
                                             color: AppColor.green,
                                             icon: const Icon(
                                               Icons.done,
@@ -383,7 +392,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                             );
                                           },
                                           child: Container(
-                                            height: H(0.06),
+                                            height:height*(0.06),
                                             width: double.infinity,
                                             color:
                                                 AppColor.grey.withOpacity(0.2),
@@ -396,12 +405,12 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                       );
                               }),
 
-                              SizedBox(height: H(0.015)),
+                              SizedBox(height: height*(0.015)),
 
                               /// order info
                               Padding(
                                 padding:
-                                    EdgeInsets.symmetric(vertical: H(0.015)),
+                                    EdgeInsets.symmetric(vertical: height*(0.015)),
                                 child: Text(
                                   "Order info",
                                   style:
@@ -429,7 +438,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: H(0.01)),
+                                    SizedBox(height: height*(0.01)),
 
                                     /// discount
                                     Row(
@@ -450,7 +459,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: H(0.01)),
+                                    SizedBox(height: height*(0.01)),
 
                                     Row(
                                       mainAxisAlignment:
@@ -468,7 +477,7 @@ class _CartDetailedScreenState extends State<CartDetailedScreen> {
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: H(0.01)),
+                                    SizedBox(height: height*(0.01)),
 
                                     /// shipping cost
                                     Row(

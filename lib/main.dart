@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/model/product.dart';
 import 'package:e_commerce_app/provider/add_review_provider.dart';
 import 'package:e_commerce_app/provider/cart_detailed_provider.dart';
@@ -8,6 +10,7 @@ import 'package:e_commerce_app/provider/forgot_password_provider.dart';
 import 'package:e_commerce_app/provider/home_provider.dart';
 import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/provider/main_provider.dart';
+import 'package:e_commerce_app/provider/mic_provider.dart';
 import 'package:e_commerce_app/provider/sellProvider.dart';
 import 'package:e_commerce_app/provider/setting_provider.dart';
 import 'package:e_commerce_app/provider/sign_up_provider.dart';
@@ -24,8 +27,14 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
-bool isLogin = false;
-late Size size;
+initializeTheme() {
+  var theme = GetStorage().read("isDark");
+
+  if (theme == null) {
+    log("initialize theme ===  $theme");
+    GetStorage().write("isDark", false);
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,6 +55,7 @@ void main() async {
   await Hive.openBox<Product>("product");
   await Hive.openBox("address");
   await Hive.openBox("theme");
+  initializeTheme();
 
   runApp(
     MultiProvider(
@@ -86,6 +96,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => SettingProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => MicProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -97,7 +110,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.sizeOf(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<SettingProvider>(context).getCurrentTheme(),

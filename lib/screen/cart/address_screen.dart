@@ -4,12 +4,10 @@ import 'package:e_commerce_app/provider/login_provider.dart';
 import 'package:e_commerce_app/screen/cart/create_address_screen.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
+ import 'package:provider/provider.dart';
 
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
+ import '../../widget/common_back_button.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -28,12 +26,14 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size(
             double.infinity,
-            H(0.1),
+            height* 0.1,
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -65,9 +65,9 @@ class _AddressScreenState extends State<AddressScreen> {
                 );
               },
               child: Container(
-                height: H(0.06),
+                height: height*0.06,
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: W(0.04)),
+                margin: EdgeInsets.symmetric(horizontal: width*(0.04)),
                 color: AppColor.grey.withOpacity(0.2),
                 alignment: Alignment.center,
                 child: const Text(
@@ -75,7 +75,9 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
               ),
             ),
-            hSizedBox(0.01),
+             SizedBox(
+              height: height*0.01,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -143,7 +145,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                 ),
                               )
                             : SizedBox(
-                                height: H(0.5),
+                                height: height*0.5,
                                 child: const Center(
                                   child: Text("Please add new address"),
                                 ),

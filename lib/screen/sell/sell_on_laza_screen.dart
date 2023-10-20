@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chips_choice/chips_choice.dart';
@@ -5,13 +6,8 @@ import 'package:e_commerce_app/provider/sellProvider.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
-
-import '../../provider/setting_provider.dart';
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
 
 class SellOnLazaScreen extends StatefulWidget {
   const SellOnLazaScreen({super.key});
@@ -36,14 +32,15 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "Sell on laza screen build method ===================================== ");
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
+    log("Sell on laza screen build method  ============ ");
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size(
             double.infinity,
-            H(0.1),
+            height * (0.1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -59,8 +56,8 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: H(0.01),
-              horizontal: W(0.04),
+              vertical: height * (0.01),
+              horizontal: width * (0.04),
             ),
             child: Consumer<SellProvider>(
               builder: (context, value, child) => Column(
@@ -70,7 +67,7 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       value.pickProductImage();
                     },
                     child: Container(
-                      height: H(0.2),
+                      height: height * (0.2),
                       width: double.infinity,
                       alignment: Alignment.center,
                       color: AppColor.grey.withOpacity(0.2),
@@ -85,7 +82,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                             ),
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.titleController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -96,7 +95,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product title",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.subTitleController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -107,7 +108,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product sub title",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.descriptionController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -118,7 +121,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product description",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.brandController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -129,7 +134,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product brand",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.priceController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -141,7 +148,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product price",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.taxController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -153,7 +162,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product tax",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.discountController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -165,7 +176,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       labelText: "Product discount",
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   TextField(
                     controller: value.shippingCostController,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -178,9 +191,8 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: H(0.05),
+                    height: height * 0.05,
                   ),
-
                   Consumer<SellProvider>(
                     builder: (context, value, child) => GestureDetector(
                       onTap: () {
@@ -196,7 +208,7 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.symmetric(
-                                        vertical: H(0.01),
+                                        vertical: height * (0.01),
                                       ),
                                       child: const Text(
                                         "Select sizes",
@@ -205,23 +217,6 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                                         ),
                                       ),
                                     ),
-                                    // Wrap(
-                                    //   children: List<Widget>.generate(
-                                    //     sizeList.length,
-                                    //     (int idx) {
-                                    //       bool _value = false;
-                                    //       return ChoiceChip(
-                                    //           label: Text(
-                                    //               sizeList[idx].toString()),
-                                    //           selected: _value == idx,
-                                    //           onSelected: (bool selected) {
-                                    //             setState(() {
-                                    //               _value = selected;
-                                    //             });
-                                    //           });
-                                    //     },
-                                    //   ).toList(),
-                                    // ),
                                     ChipsChoice<String>.multiple(
                                       value: selectedSizeList,
                                       mainAxisSize: MainAxisSize.max,
@@ -232,10 +227,10 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                                       onChanged: (val) {
                                         setState(() {
                                           selectedSizeList = val;
-                                          print(selectedSizeList);
+                                          log(selectedSizeList.toString());
                                         });
                                       },
-                                      choiceStyle: C2ChipStyle(),
+                                      choiceStyle: const C2ChipStyle(),
                                       choiceItems:
                                           C2Choice.listFrom<String, String>(
                                         source: sizeList,
@@ -251,9 +246,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                         );
                       },
                       child: Container(
-                        height: H(0.06),
+                        height: height * (0.06),
                         width: double.infinity,
-                        margin: EdgeInsets.symmetric(vertical: H(0.02)),
+                        margin: EdgeInsets.symmetric(vertical: height * (0.02)),
                         color: AppColor.grey.withOpacity(0.2),
                         alignment: Alignment.center,
                         child: const Text(
@@ -263,7 +258,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       ),
                     ),
                   ),
-                  hSizedBox(0.01),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: GestureDetector(
@@ -271,9 +268,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                         value.pickProductMultipleImage();
                       },
                       child: Container(
-                        height: H(0.06),
+                        height: height * (0.06),
                         width: double.infinity,
-                        margin: EdgeInsets.symmetric(vertical: H(0.02)),
+                        margin: EdgeInsets.symmetric(vertical: height * (0.02)),
                         color: AppColor.grey.withOpacity(0.2),
                         alignment: Alignment.center,
                         child: const Text(
@@ -305,8 +302,8 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                           badgeColor: AppColor.purple,
                         ),
                         child: Container(
-                          height: H(0.15),
-                          width: H(0.15),
+                          height: height * (0.15),
+                          width: height * (0.15),
                           color: AppColor.grey.withOpacity(0.5),
                           child: Image.file(
                             File(value.productImagesList[index]!.path),
@@ -316,7 +313,9 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
                       ),
                     ),
                   ),
-                  hSizedBox(0.1),
+                  SizedBox(
+                    height: height * 0.1,
+                  ),
                 ],
               ),
             ),
@@ -326,8 +325,8 @@ class _SellOnLazaScreenState extends State<SellOnLazaScreen> {
           builder: (context, value, child) => value.isLoading
               ? Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: W(0.05),
-                    vertical: H(0.02),
+                    horizontal: width * (0.05),
+                    vertical: height * (0.02),
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

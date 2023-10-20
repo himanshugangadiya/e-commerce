@@ -7,9 +7,7 @@ import 'package:e_commerce_app/screen/sell/sell_on_laza_screen.dart';
 import 'package:e_commerce_app/screen/setting/setting_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
-import 'package:e_commerce_app/utils/height_width.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home_screen.dart';
@@ -38,9 +36,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return WillPopScope(
       onWillPop: () {
-        return showExitPopUp();
+        return showExitPopUp(height, width);
       },
       child: SafeArea(
         child: Scaffold(
@@ -53,10 +53,10 @@ class _MainScreenState extends State<MainScreen> {
               items: [
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
+                    padding: EdgeInsets.symmetric(vertical: height * (0.01)),
                     child: Image.asset(
                       AppImage.home,
-                      height: H(0.027),
+                      height: height * (0.027),
                       color:
                           Provider.of<SettingProvider>(context, listen: false)
                                   .storage
@@ -73,10 +73,10 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
+                    padding: EdgeInsets.symmetric(vertical: height * (0.01)),
                     child: Image.asset(
                       AppImage.bag,
-                      height: H(0.027),
+                      height: height * (0.027),
                       color:
                           Provider.of<SettingProvider>(context, listen: false)
                                   .storage
@@ -93,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
+                    padding: EdgeInsets.symmetric(vertical: height * (0.01)),
                     child: Image.asset(
                       AppImage.setting,
                       color:
@@ -106,17 +106,17 @@ class _MainScreenState extends State<MainScreen> {
                               : value.selectedIndex == 2
                                   ? AppColor.black
                                   : AppColor.grey,
-                      height: H(0.030),
+                      height: height * (0.030),
                     ),
                   ),
                   label: "Setting",
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: EdgeInsets.symmetric(vertical: H(0.01)),
+                    padding: EdgeInsets.symmetric(vertical: height * (0.01)),
                     child: Image.asset(
                       AppImage.cart,
-                      height: H(0.027),
+                      height: height * (0.027),
                       color:
                           Provider.of<SettingProvider>(context, listen: false)
                                   .storage
@@ -161,7 +161,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   /// EXIT POPUP
-  Future<bool> showExitPopUp() async {
+  Future<bool> showExitPopUp(double height, double width) async {
     return await showDialog(
           context: context,
           builder: (context) {
@@ -196,8 +196,8 @@ class _MainScreenState extends State<MainScreen> {
                           padding: const EdgeInsets.all(8),
                           alignment: Alignment.center,
                           margin: EdgeInsets.symmetric(
-                            horizontal: W(0.02),
-                            vertical: H(0.005),
+                            horizontal: width * (0.02),
+                            vertical: height * (0.005),
                           ),
                           decoration: BoxDecoration(
                             // color: BaseColor.blue,
@@ -223,8 +223,8 @@ class _MainScreenState extends State<MainScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           margin: EdgeInsets.symmetric(
-                            horizontal: W(0.02),
-                            vertical: H(0.005),
+                            horizontal: width * (0.02),
+                            vertical: height * (0.005),
                           ),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
@@ -245,7 +245,9 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 ),
-                wSizedBox(0.03),
+                SizedBox(
+                  width: width * 0.03,
+                )
               ],
             );
           },

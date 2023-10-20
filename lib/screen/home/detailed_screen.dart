@@ -18,9 +18,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../provider/login_provider.dart';
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
 
 class DetailedScreen extends StatefulWidget {
   final String id;
@@ -54,6 +52,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return WillPopScope(
       onWillPop: () async {
         Provider.of<DetailedProvider>(context, listen: false)
@@ -76,7 +76,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                       Hero(
                         tag: widget.productId.toString(),
                         child: SizedBox(
-                          height: H(0.4),
+                          height: height * (0.4),
                           width: double.infinity,
                           child: widget.data["product_image"] != ''
                               ? InteractiveViewer(
@@ -98,8 +98,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                       /// sub title
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          vertical: H(0.011),
-                          horizontal: W(0.04),
+                          vertical: height * (0.011),
+                          horizontal: width * (0.04),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,7 +123,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                       /// title & price
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: W(0.04),
+                          horizontal: width * (0.04),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,16 +155,19 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           ],
                         ),
                       ),
-                      hSizedBox(0.02),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
 
                       /// image listview
                       SizedBox(
-                        height: H(0.1),
+                        height: height * (0.1),
                         width: double.maxFinite,
                         child: ListView.builder(
                           itemCount: widget.data["image_list"].length,
                           physics: const BouncingScrollPhysics(),
-                          padding: EdgeInsets.symmetric(horizontal: W(0.04)),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * (0.04)),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return GestureDetector(
@@ -191,25 +194,28 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           },
                         ),
                       ),
-                      hSizedBox(0.01),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
 
                       /// size
                       const SizeTextWidget(),
 
                       /// size listview
                       SizedBox(
-                        height: H(0.075),
+                        height: height * (0.075),
                         width: double.maxFinite,
                         child: Consumer<DetailedProvider>(
                           builder: (context, value, child) => ListView.builder(
                             itemCount: widget.data["size_list"].length,
                             physics: const BouncingScrollPhysics(),
-                            padding: EdgeInsets.symmetric(horizontal: W(0.04)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: width * (0.04)),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsets.only(
-                                  right: W(0.02),
+                                  right: width * (0.02),
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
@@ -221,8 +227,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                       );
                                     },
                                     child: Container(
-                                      height: H(0.075),
-                                      width: W(0.17),
+                                      height: height * (0.075),
+                                      width: width * (0.17),
                                       color: value.selectedSizeIndex == index
                                           ? AppColor.purple
                                           : AppColor.grey.withOpacity(0.2),
@@ -263,7 +269,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
                         ),
                       ),
 
-                      hSizedBox(0.005),
+                      SizedBox(
+                        height: height * 0.005,
+                      ),
 
                       /// description
                       const DescriptionTextWidget(),
@@ -279,8 +287,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                       widget.data["review_list"].length != 0
                           ? Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: W(0.04),
-                                vertical: H(0.015),
+                                horizontal: width * (0.04),
+                                vertical: height * (0.015),
                               ),
                               child: Row(
                                 mainAxisAlignment:
@@ -324,8 +332,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                             )
                           : Padding(
                               padding: EdgeInsets.symmetric(
-                                horizontal: W(0.04),
-                                vertical: H(0.02),
+                                horizontal: width * (0.04),
+                                vertical: height * (0.02),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
@@ -344,7 +352,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      vertical: H(0.01),
+                                      vertical: height * (0.01),
                                     ),
                                     width: double.infinity,
                                     color: AppColor.grey.withOpacity(0.2),
@@ -366,15 +374,15 @@ class _DetailedScreenState extends State<DetailedScreen> {
                           itemCount: 1,
                           shrinkWrap: true,
                           padding: EdgeInsets.symmetric(
-                            horizontal: W(0.04),
-                            vertical: H(0.01),
+                            horizontal: width * 0.04,
+                            vertical: height * (0.01),
                           ),
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             var reviewsData = widget.data["review_list"].last;
                             return Padding(
                               padding: EdgeInsets.only(
-                                bottom: H(0.03),
+                                bottom: height * (0.03),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,8 +393,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                     children: [
                                       ClipOval(
                                         child: Container(
-                                          height: H(0.06),
-                                          width: H(0.06),
+                                          height: height * (0.06),
+                                          width: height * (0.06),
                                           color: Colors.grey.withOpacity(0.3),
                                           alignment: Alignment.center,
                                           child: Text(
@@ -396,7 +404,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                           ),
                                         ),
                                       ),
-                                      wSizedBox(0.03),
+                                      SizedBox(
+                                        width: width * 0.03,
+                                      ),
                                       Expanded(
                                         child: Column(
                                           children: [
@@ -428,7 +438,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                                 ),
                                               ],
                                             ),
-                                            hSizedBox(0.003),
+                                            SizedBox(
+                                              height: height * 0.003,
+                                            ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -477,7 +489,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
                                       ),
                                     ],
                                   ),
-                                  hSizedBox(0.005),
+                                  SizedBox(
+                                    height: height * 0.005,
+                                  ),
                                   Text(
                                     reviewsData["description"].toString(),
                                     style: const TextStyle(
@@ -495,7 +509,7 @@ class _DetailedScreenState extends State<DetailedScreen> {
                       /// total price
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: W(0.04),
+                          horizontal: width * (0.04),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -530,7 +544,9 @@ class _DetailedScreenState extends State<DetailedScreen> {
                         ),
                       ),
 
-                      hSizedBox(0.03),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
                     ],
                   ),
                 ),
@@ -560,8 +576,8 @@ class _DetailedScreenState extends State<DetailedScreen> {
                             value.changeWishList();
                           },
                           child: Container(
-                            height: H(0.06),
-                            width: H(0.06),
+                            height: height * (0.06),
+                            width: height * (0.06),
                             color: AppColor.grey.withOpacity(0.2),
                             child: value.isWishlist
                                 ? const Icon(
@@ -614,11 +630,11 @@ class DescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = View.of(context).platformDispatcher.platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    double width = MediaQuery.sizeOf(context).width;
+
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: W(0.04),
+        horizontal: width * (0.04),
       ),
       child: Row(
         children: [
@@ -662,10 +678,12 @@ class DescriptionTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: W(0.04),
-        vertical: H(0.015),
+        horizontal: width * (0.04),
+        vertical: height * (0.015),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -689,10 +707,12 @@ class SizeTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: W(0.04),
-        vertical: H(0.015),
+        horizontal: width * (0.04),
+        vertical: height * (0.015),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -718,15 +738,17 @@ class ImageListSubWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: EdgeInsets.only(
-        right: W(0.02),
+        right: width * (0.02),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          height: H(0.01),
-          width: W(0.22), // 22
+          height: height * (0.01),
+          width: width * (0.22), // 22
           color: Colors.grey.withOpacity(0.2),
           child: FancyShimmerImage(
             imageUrl: image.toString(),

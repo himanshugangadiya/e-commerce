@@ -3,6 +3,7 @@ import 'package:e_commerce_app/provider/home_provider.dart';
 import 'package:e_commerce_app/screen/home/all_brands_screen.dart';
 import 'package:e_commerce_app/screen/home/brand_screen.dart';
 import 'package:e_commerce_app/screen/home/detailed_screen.dart';
+import 'package:e_commerce_app/screen/home/mic_screen.dart';
 import 'package:e_commerce_app/screen/home/search_screen.dart';
 import 'package:e_commerce_app/utils/app_image.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
 import '../../widget/common_view_all_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,23 +24,29 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(top: H(0.025)),
+          padding: EdgeInsets.only(top: height * (0.025)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              hSizedBox(0.01),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const HelloTextWidget(),
-              hSizedBox(0.005),
+              SizedBox(
+                height: height * 0.005,
+              ),
               const WelcomeToLazaWidget(),
 
               /// search
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: H(0.02),
-                  horizontal: W(0.05),
+                  vertical: height * (0.02),
+                  horizontal: width * (0.05),
                 ),
                 child: Row(
                   children: [
@@ -50,12 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SearchScreen(),
+                              builder: (context) =>
+                                  const SearchScreen(spokenText: ""),
                             ),
                           );
                         },
                         child: Container(
-                          height: H(0.06),
+                          height: height * (0.06),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: AppColor.grey.withOpacity(0.1),
@@ -65,11 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: W(0.04),
+                                  horizontal: width * (0.04),
                                 ),
                                 child: Image.asset(
                                   AppImage.search,
-                                  height: H(0.025),
+                                  height: height * (0.025),
                                 ),
                               ),
                               Expanded(
@@ -97,17 +104,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    wSizedBox(0.03),
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        height: H(0.06),
-                        width: H(0.06),
-                        color: AppColor.purple,
-                        padding: const EdgeInsets.all(10),
-                        child: Image.asset(
-                          AppImage.voice,
-                          fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MicScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: height * (0.06),
+                          width: height * (0.06),
+                          color: AppColor.purple,
+                          padding: const EdgeInsets.all(10),
+                          child: Image.asset(
+                            AppImage.voice,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     )
@@ -115,11 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              hSizedBox(0.02),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
               /// choose brand
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: W(0.05)),
+                padding: EdgeInsets.symmetric(horizontal: width * (0.05)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -143,7 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: H(0.02)),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
               /// brand listview
               StreamBuilder(
@@ -157,9 +180,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   } else {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColor.black,
+                      return SizedBox(
+                        height: height * (0.065),
+                        child: ListView.builder(
+                          itemCount: 5,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(right: width * (0.03)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Container(
+                                  width: width * 0.15,
+                                  padding: EdgeInsets.only(
+                                    right: width * (0.05),
+                                    left: width * (0.05),
+                                  ),
+                                  alignment: Alignment.center,
+                                  color: AppColor.grey.withOpacity(0.15),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
                     } else {
@@ -171,15 +214,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       brandList = data.toList();
 
                       return SizedBox(
-                        height: H(0.065),
+                        height: height * (0.065),
                         child: ListView.builder(
                           itemCount: brandList.length,
-                          padding: EdgeInsets.symmetric(horizontal: W(0.05)),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * (0.05)),
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.only(right: W(0.03)),
+                              padding: EdgeInsets.only(right: width * (0.03)),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -195,8 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                      right: W(0.05),
-                                      left: W(0.05),
+                                      right: width * (0.05),
+                                      left: width * (0.05),
                                     ),
                                     alignment: Alignment.center,
                                     color: AppColor.grey.withOpacity(0.15),
@@ -218,11 +262,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
 
-              SizedBox(height: H(0.025)),
+              SizedBox(height: height * (0.025)),
 
               /// new arrival
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: W(0.05)),
+                padding: EdgeInsets.symmetric(horizontal: width * (0.05)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -239,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: H(0.01)),
+              SizedBox(height: height * (0.01)),
 
               /// new arrival listview
               Expanded(
@@ -276,8 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     childAspectRatio: 0.62,
                                   ),
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: W(0.05),
-                                    vertical: H(0.02),
+                                    horizontal: width * (0.05),
+                                    vertical: height * (0.02),
                                   ),
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -320,6 +364,8 @@ class HomeSubWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return GestureDetector(
       onTap: () async {
         Map product = data;
@@ -353,7 +399,7 @@ class HomeSubWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                      height: H(0.24),
+                      height: height * (0.24),
                       width: double.infinity,
                       color: AppColor.grey.withOpacity(0.1),
                       child: FancyShimmerImage(
@@ -362,10 +408,12 @@ class HomeSubWidget extends StatelessWidget {
                       )),
                 ),
               ),
-              hSizedBox(0.005),
+              SizedBox(
+                height: height * 0.005,
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: W(0.01),
+                  left: width * (0.01),
                 ),
                 child: Text(
                   data["title"].toString(),
@@ -377,10 +425,12 @@ class HomeSubWidget extends StatelessWidget {
                   maxLines: 2,
                 ),
               ),
-              hSizedBox(0.005),
+              SizedBox(
+                height: height * 0.005,
+              ),
               Padding(
                 padding: EdgeInsets.only(
-                  left: W(0.01),
+                  left: width * (0.01),
                 ),
                 child: Text(
                   "₹ ${data["price"].toString()}",
@@ -406,8 +456,9 @@ class WelcomeToLazaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.sizeOf(context).width;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: W(0.05)),
+      padding: EdgeInsets.symmetric(horizontal: width * (0.05)),
       child: const Text(
         "Welcome to Laza",
         style: TextStyle(color: AppColor.grey),
@@ -423,14 +474,14 @@ class HelloTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.sizeOf(context).width;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: W(0.05)),
+      padding: EdgeInsets.symmetric(horizontal: width * (0.05)),
       child: Text(
         "Hello",
         style: Theme.of(context).textTheme.headlineMedium,
-      ).animate().fade(
-            duration: const Duration(seconds: 2),
-          ),
+      ),
     );
   }
 }

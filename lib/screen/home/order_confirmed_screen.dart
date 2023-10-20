@@ -3,8 +3,6 @@ import 'package:e_commerce_app/utils/app_image.dart';
 import 'package:e_commerce_app/widget/common_bottom_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
 import '../main_screen.dart';
 
 class OrderConfirmedScreen extends StatefulWidget {
@@ -23,6 +21,8 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     debugPrint("sign up screen build method run =================== ");
     return SafeArea(
       child: Scaffold(
@@ -32,21 +32,25 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: W(0.05),
-                vertical: H(0.04),
+                horizontal: width * (0.05),
+                vertical: height * (0.04),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  hSizedBox(0.03),
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
                   Center(
                     child: Image.asset(
                       AppImage.orderConfirmed,
                       fit: BoxFit.cover,
-                      height: H(0.3),
+                      height: height * (0.3),
                     ),
                   ),
-                  hSizedBox(0.04),
+                  SizedBox(
+                    height: height * 0.04,
+                  ),
                   Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -54,7 +58,9 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
-                  hSizedBox(0.02),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
                   const Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -70,7 +76,7 @@ class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: W(0.05),
+                horizontal: width * (0.05),
               ),
               child: Row(
                 children: [

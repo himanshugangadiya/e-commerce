@@ -3,9 +3,7 @@ import 'package:e_commerce_app/screen/home/brand_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
-import '../../utils/height_width.dart';
-import '../../widget/common_back_button.dart';
-import 'home_screen.dart';
+ import '../../widget/common_back_button.dart';
 
 class AllBrandsScreen extends StatefulWidget {
   const AllBrandsScreen({super.key});
@@ -17,11 +15,13 @@ class AllBrandsScreen extends StatefulWidget {
 class _AllBrandsScreenState extends State<AllBrandsScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(
           double.infinity,
-          H(0.1),
+          height*(0.1),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -46,7 +46,7 @@ class _AllBrandsScreenState extends State<AllBrandsScreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: W(0.05),
+              horizontal: width*(0.05),
             ),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -131,8 +131,8 @@ class _AllBrandsScreenState extends State<AllBrandsScreen> {
                               crossAxisSpacing: 10,
                             ),
                             padding: EdgeInsets.symmetric(
-                              horizontal: W(0.05),
-                              vertical: H(0.02),
+                              horizontal: width*(0.05),
+                              vertical: height*(0.02),
                             ),
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
@@ -148,8 +148,8 @@ class _AllBrandsScreenState extends State<AllBrandsScreen> {
                                   );
                                 },
                                 child: Container(
-                                  height: H(0.1),
-                                  width: H(0.1),
+                                  height: height*(0.1),
+                                  width: height*(0.1),
                                   color: AppColor.grey.withOpacity(0.2),
                                   alignment: Alignment.center,
                                   child: Text(

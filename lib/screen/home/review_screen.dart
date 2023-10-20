@@ -1,13 +1,11 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/screen/home/add_review_screen.dart';
 import 'package:e_commerce_app/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 
-import '../../utils/height_width.dart';
 import '../../widget/common_back_button.dart';
 
 class ReviewScreen extends StatefulWidget {
@@ -52,10 +50,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     debugPrint("review screen build method run ========================== ");
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, H(0.1)),
+        preferredSize: Size(double.infinity, height * (0.1)),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: AppBar(
@@ -76,7 +76,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: W(0.05),
+          horizontal: width * (0.05),
         ),
         child: Visibility(
           visible: widget.reviewLength != 0,
@@ -98,7 +98,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             .displayMedium!
                             .copyWith(fontSize: 17),
                       ),
-                      hSizedBox(0.005),
+                      SizedBox(
+                        height: height * 0.005,
+                      ),
                       Row(
                         children: [
                           Text(
@@ -108,7 +110,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                 .displayMedium!
                                 .copyWith(fontSize: 15, color: AppColor.grey),
                           ),
-                          wSizedBox(0.01),
+                          SizedBox(
+                            width: width * 0.01,
+                          ),
                           RatingBar.builder(
                             initialRating:
                                 double.parse(averageRating().toString()),
@@ -123,7 +127,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               color: Colors.amber,
                             ),
                             onRatingUpdate: (rating) {
-                              print(rating);
+                              log(rating.toString());
                             },
                           ),
                         ],
@@ -149,7 +153,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     ),
                     color: AppColor.orange,
                     elevation: 0.0,
-                    height: H(0.05),
+                    height: height * (0.05),
                     child: const Text(
                       "Add Review",
                       style: TextStyle(color: AppColor.white),
@@ -158,21 +162,23 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 ],
               ),
 
-              hSizedBox(0.01),
+              SizedBox(
+                height: height * 0.01,
+              ),
 
               /// reviews listview
               Expanded(
                 child: ListView.builder(
                   itemCount: reviewReverseData.length,
                   padding: EdgeInsets.symmetric(
-                    vertical: H(0.02),
+                    vertical: height * (0.02),
                   ),
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     var reviewsData = reviewReverseData[index];
                     return Padding(
                       padding: EdgeInsets.only(
-                        bottom: H(0.03),
+                        bottom: height * (0.03),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,8 +188,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               ClipOval(
                                 child: Container(
-                                  height: H(0.05),
-                                  width: H(0.05),
+                                  height: height * (0.05),
+                                  width: height * (0.05),
                                   color: Colors.grey.withOpacity(0.2),
                                   alignment: Alignment.center,
                                   child: Text(
@@ -193,7 +199,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                   ),
                                 ),
                               ),
-                              wSizedBox(0.03),
+                              SizedBox(
+                                width: width * 0.03,
+                              ),
                               Expanded(
                                 child: Column(
                                   children: [
@@ -221,7 +229,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                         )
                                       ],
                                     ),
-                                    hSizedBox(0.003),
+                                    SizedBox(
+                                      height: height * 0.003,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -268,7 +278,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               ),
                             ],
                           ),
-                          hSizedBox(0.005),
+                          SizedBox(
+                            height: height * 0.005,
+                          ),
                           Text(
                             reviewsData["description"].toString(),
                             style: const TextStyle(
